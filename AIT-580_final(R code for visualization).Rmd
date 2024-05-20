@@ -1,0 +1,28 @@
+---
+title: "Visualization using R(AiT final)"
+author: "Chanyoung Park"
+date: "2023-11-30"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, in}
+data = read.csv("C:/Users/cytim/OneDrive/바탕 화면/AIT 580/cleaned_netflix_titles.csv")
+```
+
+```{r}
+tmp1 <- data %>% group_by(type, added_year) %>% summarise(count=n(), .groups="drop")
+ggplot(tmp1, aes(x=added_year, y=count, fill=type)) + 
+  geom_area(aes(group=type), position='stack') + 
+  labs(title="Number of Works Added to Netflix by Year", x="Year", y="Counts")
+
+```
+```{r}
+tmp2 <- data %>% group_by(added_year, relativity) %>% summarise(count=n(),.groups="drop")
+ggplot(tmp2, aes(x=added_year, y=count, fill=relativity)) + geom_bar(stat='identity', position='dodge') + labs(title="Yearly Comparison", x="Year", y="Counts")
+```
+
+
